@@ -1,18 +1,18 @@
-name: Publish Docker image   # workflow名称，可以在Github项目主页的【Actions】中看到所有的workflow
+name: Publish Docker image
 
-on:   # 配置触发workflow的事件
+on:
   push:
-    branches:   # main分支有push时触发此workflow
+    branches:
       - 'main'
 
-jobs:  # workflow中的job
+jobs:
 
-  build:  # job的名字
+  build:
     name: Push Docker image to Docker Hub
-    runs-on: ubuntu-latest   # job运行的基础环境
-    steps:  # 一个job由一个或多个step组成
+    runs-on: ubuntu-latest
+    steps:
       - name: Check out the repo
-        uses: actions/checkout@v2   # 官方的action，获取代码
+        uses: actions/checkout@v2
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -26,4 +26,4 @@ jobs:  # workflow中的job
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: endermands/ros_noetic_zsh:latest
+          tags: endermands/ros_noetic_zsh:opencv

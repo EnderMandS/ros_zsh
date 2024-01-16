@@ -7,6 +7,7 @@ ARG USERNAME=m
 RUN apt update && \
     apt install -y vim tree wget curl git unzip ninja-build && \
     apt install -y libeigen3-dev && \
+    DEBIAN_FRONTEND=noninteractive apt install -y keyboard-configuration && \
     rm -rf /var/lib/apt/lists/*
 
 # setup user

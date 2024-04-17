@@ -6,6 +6,7 @@ ARG USERNAME=m
 
 RUN apt update && \
     apt install -y vim tree wget curl git unzip ninja-build && \
+    apt install -y zsh && \
     apt install -y libeigen3-dev libopencv-dev && \
     apt install -y ros-${ROS_DISTRO}-cv-bridge && \
     DEBIAN_FRONTEND=noninteractive apt install -y keyboard-configuration && \
@@ -21,12 +22,16 @@ RUN groupadd --gid $USER_GID $USERNAME \
 USER $USERNAME
 
 # zsh
-RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh-in-docker.sh)" -- \
-    -t robbyrussell  \ 
-    -p git \
-    -p https://github.com/zsh-users/zsh-autosuggestions \
-    -p https://github.com/zsh-users/zsh-syntax-highlighting && \
-    sudo rm -rf /var/lib/apt/lists/*
+# RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh-in-docker.sh)" -- \
+#     -t robbyrussell  \ 
+#     -p git \
+#     -p https://github.com/zsh-users/zsh-autosuggestions \
+#     -p https://github.com/zsh-users/zsh-syntax-highlighting && \
+#     sudo rm -rf /var/lib/apt/lists/*
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+
+# Set zsh as the default shell
+SHELL ["/bin/zsh", "-c"]
 
 # # OpenCV
 # WORKDIR /home/${USERNAME}/pkg/OpenCV

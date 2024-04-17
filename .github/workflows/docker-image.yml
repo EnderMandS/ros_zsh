@@ -3,7 +3,7 @@ name: Publish Docker image
 on:
   push:
     branches:
-      - 'main'
+      - 'arm64'
 
 jobs:
 
@@ -27,3 +27,4 @@ jobs:
         with:
           push: true
           tags: endermands/ros_noetic_zsh:opencv
+          platforms: linux/arm64

@@ -27,3 +27,4 @@ jobs:
         with:
           push: true
           tags: endermands/ros_noetic_zsh:opencv
+          platforms: linux/amd64, linux/arm64

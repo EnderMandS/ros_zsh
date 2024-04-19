@@ -29,6 +29,9 @@ USER $USERNAME
 #     -p https://github.com/zsh-users/zsh-syntax-highlighting && \
 #     sudo rm -rf /var/lib/apt/lists/*
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+RUN git clone --depth 1 https://github.com/zsh-users/zsh-autosuggestions /home/${USERNAME}/.oh-my-zsh/custom/plugins/zsh-autosuggestions && \
+    git clone --depth 1 https://github.com/zsh-users/zsh-syntax-highlighting.git /home/${USERNAME}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting && \
+    sed -i 's/plugins=(git)/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)' /home/${USERNAME}/.zshrc
 
 # Set zsh as the default shell
 SHELL ["/bin/zsh", "-c"]

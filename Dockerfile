@@ -8,7 +8,8 @@ RUN apt update && \
     apt install -y vim tree wget curl git unzip ninja-build && \
     apt install -y zsh && \
     apt install -y libeigen3-dev && \
-    apt install -y ros-${ROS_DISTRO}-cv-bridge && \
+    apt install -y ros-${ROS_DISTRO}-cv-bridge ros-${ROS_DISTRO}-tf ros-${ROS_DISTRO}-tf2 \
+    ros-${ROS_DISTRO}-tf2-ros && \
     DEBIAN_FRONTEND=noninteractive apt install -y keyboard-configuration && \
     rm -rf /var/lib/apt/lists/*
 

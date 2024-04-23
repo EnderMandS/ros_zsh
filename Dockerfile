@@ -1,7 +1,7 @@
-FROM ros:noetic-ros-base-focal
+FROM ros:kinetic-ros-base-xenial
 
 ENV DEBIAN_FRONTEND=noninteractive
-ENV ROS_DISTRO noetic
+ENV ROS_DISTRO kinetic
 ARG USERNAME=m
 
 RUN apt update && \

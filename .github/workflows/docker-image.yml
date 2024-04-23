@@ -26,5 +26,5 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: endermands/ros_noetic_zsh:opencv
+          tags: endermands/ros_zsh:noetic
           platforms: linux/amd64, linux/arm64

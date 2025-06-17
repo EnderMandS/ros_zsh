@@ -1,16 +1,16 @@
-FROM ros:noetic-ros-base-focal
+FROM ros:humble-ros-base-jammy
 
 ENV DEBIAN_FRONTEND=noninteractive
-ENV ROS_DISTRO noetic
-ARG USERNAME=m
+ENV ROS_DISTRO=humble
+ARG USERNAME=ubuntu
+ARG TARGETPLATFORM
 
 RUN apt update && \
-    apt install -y vim tree wget curl git unzip ninja-build && \
+    apt install -y tree wget curl git unzip zip && \
+    if [ "$TARGETPLATFORM" = "linux/amd64" ]; then apt install -y vim; fi && \
     apt install -y zsh && \
     apt install -y libeigen3-dev && \
-    apt install -y ros-${ROS_DISTRO}-cv-bridge ros-${ROS_DISTRO}-tf ros-${ROS_DISTRO}-tf2 \
-    ros-${ROS_DISTRO}-tf2-ros && \
-    DEBIAN_FRONTEND=noninteractive apt install -y keyboard-configuration && \
+    apt install -y python3-colcon-common-extensions python3-rosdep python3-vcstool python3-pip python3-colcon-mixin && \
     rm -rf /var/lib/apt/lists/*
 
 # setup user
@@ -29,6 +29,12 @@ RUN git clone --depth 1 https://github.com/zsh-users/zsh-autosuggestions /home/$
     sed -i 's/plugins=(git)/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/g' /home/${USERNAME}/.zshrc
 SHELL ["/bin/zsh", "-c"]
 
-WORKDIR /home/${USERNAME}/code/ros_ws
+RUN echo "source /opt/ros/${ROS_DISTRO}/setup.zsh" >> /home/${USERNAME}/.zshrc && \
+    echo "source /usr/share/colcon_cd/function/colcon_cd.sh" >> /home/$USERNAME/.zshrc && \
+    echo "export _colcon_cd_root=/opt/ros/${ROS_DISTRO}/" >> /home/$USERNAME/.zshrc && \
+    echo "source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.zsh" >> /home/$USERNAME/.zshrc && \
+    echo ": 1700000000:0;colcon build --mixin release" >> /home/$USERNAME/.zsh_history
 
-ENTRYPOINT [ "/bin/zsh" ]
+WORKDIR /home/${USERNAME}/code
+
+ENTRYPOINT [ "/bin/zsh", "-l" ]

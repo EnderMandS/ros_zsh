@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        variant: [humble-base, humble-desktop]
+        variant: [humble-base, humble-desktop, jazzy-base, jazzy-desktop]
         include:
           - variant: humble-base
             tag: "humble-base"
@@ -22,6 +22,12 @@ jobs:
           - variant: humble-desktop
             tag: "humble-desktop"
             dockerfile: "Dockerfile_humble_desktop"
+          - variant: jazzy-base
+            tag: "jazzy-base"
+            dockerfile: "Dockerfile_jazzy_base"
+          - variant: jazzy-desktop
+            tag: "jazzy-desktop"
+            dockerfile: "Dockerfile_jazzy_desktop"
     steps:
       - name: Check out repository
         uses: actions/checkout@v4

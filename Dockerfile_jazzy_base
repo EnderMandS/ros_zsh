@@ -25,7 +25,8 @@ RUN echo "source /opt/ros/${ROS_DISTRO}/setup.zsh" >> /home/${USERNAME}/.zshrc &
     echo "source /usr/share/colcon_cd/function/colcon_cd.sh" >> /home/${USERNAME}/.zshrc && \
     echo "export _colcon_cd_root=/opt/ros/${ROS_DISTRO}/" >> /home/${USERNAME}/.zshrc && \
     echo "source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.zsh" >> /home/${USERNAME}/.zshrc && \
-    echo ": 1700000000:0;colcon build --mixin release" >> /home/${USERNAME}/.zsh_history
+    echo ": 1700000000:0;colcon build --mixin release" >> /home/${USERNAME}/.zsh_history && \
+    rosdep update
 
 WORKDIR /home/${USERNAME}/code
 

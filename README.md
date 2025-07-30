@@ -37,7 +37,11 @@ Edit `/etc/docker/daemon.json`, add following params:
 ### Base
 ``` shell
 docker pull endermands/ros:humble-base
-docker run --name humble_base -itd --runtime=nvidia --gpus all --network=host \
+docker run --name humble_base -itd \
+    --runtime=nvidia --gpus all \
+    --network=host --ipc=host \
+    -e ROS_DOMAIN_ID=$ROS_DOMAIN_ID \
+    -e RMW_IMPLEMENTATION=$RMW_IMPLEMENTATION \
     ghcr.io/endermands/ros:humble-base
 ```
 
@@ -45,9 +49,13 @@ docker run --name humble_base -itd --runtime=nvidia --gpus all --network=host \
 ``` shell
 xhost +local:docker
 docker pull endermands/ros:humble-desktop
-docker run --name humble_desktop -itd --runtime=nvidia --gpus all --network=host \
+docker run --name humble_desktop -itd \
+    --runtime=nvidia --gpus all \
+    --network=host --ipc=host \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v $HOME/.Xauthority:/root/.Xauthority \
     -e DISPLAY=$DISPLAY \
+    -e ROS_DOMAIN_ID=$ROS_DOMAIN_ID \
+    -e RMW_IMPLEMENTATION=$RMW_IMPLEMENTATION \
     ghcr.io/endermands/ros:humble-desktop
 ```

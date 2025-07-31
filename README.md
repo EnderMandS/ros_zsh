@@ -53,9 +53,73 @@ docker run --name humble_desktop -itd \
     --runtime=nvidia --gpus all \
     --network=host --ipc=host \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
-    -v $HOME/.Xauthority:/root/.Xauthority \
     -e DISPLAY=$DISPLAY \
     -e ROS_DOMAIN_ID=$ROS_DOMAIN_ID \
     -e RMW_IMPLEMENTATION=$RMW_IMPLEMENTATION \
     ghcr.io/endermands/ros:humble-desktop
+```
+
+## Visualization on Windows11
+
+There are two ways to visualize using SSH X11 Forwarding: WSL2 and VsXsrv.
+
+Edit remote `/etc/ssh/sshd_config`, make sure that:
+``` shell
+X11Forwarding yes
+X11UseLocalhost no
+```
+
+Restart SSH service after config file changed:
+``` shell
+sudo systemctl restart sshd
+```
+
+### WSL2
+
+Install wsl2 following [here](https://learn.microsoft.com/en-us/windows/wsl/install)
+
+Install Xserver:
+``` shell
+sudo apt update
+sudo apt install -y xauth x11-apps
+ssh -Y -C name@ip
+xeyes
+```
+
+### VcXsrv
+
+Download [VcXsrv](https://sourceforge.net/projects/vcxsrv/), launch:
+1. Display settings → Multiple windows → Next
+2. Client startup → Start no client → Next
+3. Extra settings → Disable access control → Next
+
+On windows terminal:
+``` shell 
+ssh -Y -C name@ip
+xeyes
+```
+
+### Visualization remote docker containers
+
+After successfully visulize remote GUI apps, you can get some display info:
+``` shell
+echo $DISPLAY # like localhost:10.0
+xauth list "$DISPLAY" # like myhost/unix:11 MIT-MAGIC-COOKIE-1 0123456789abcdef0123456789abcdef
+```
+
+Enter the container and set `DISPLAY` and `xauth` using outputs before:
+``` shell
+export DISPLAY=localhost:10.0
+xauth add myhost/unix:11 MIT-MAGIC-COOKIE-1 0123456789abcdef0123456789abcdef
+xeyes
+```
+
+### Issues
+
+#### Xauthority file permission
+```
+rm -r ~/.Xauthority
+touch ~/.Xauthority
+chmod 600 ~/.Xauthority
+chown $(id -u):$(id -g) ~/.Xauthority
 ```

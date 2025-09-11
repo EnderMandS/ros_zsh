@@ -14,8 +14,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        variant: [humble-base, humble-desktop, jazzy-base, jazzy-desktop]
+        variant: [noetic-base, noetic-desktop, humble-base, humble-desktop, jazzy-base, jazzy-desktop]
         include:
+          - variant: noetic-base
+            tag: "noetic-base"
+            dockerfile: "Dockerfile_noetic_base"
+          - variant: noetic-desktop
+            tag: "noetic-desktop"
+            dockerfile: "Dockerfile_noetic_desktop"
           - variant: humble-base
             tag: "humble-base"
             dockerfile: "Dockerfile_humble_base"

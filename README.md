@@ -13,11 +13,21 @@ curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dear
 curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
     sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
     sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list && \
+# sudo vim /etc/apt/sources.list.d/nvidia-container-toolkit.list
+# deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://mirrors.ustc.edu.cn/libnvidia-container/stable/ubuntu18.04/amd64 /
+
 sudo apt update
 sudo apt install -y nvidia-container-toolkit
 sudo systemctl restart docker
 sudo nvidia-ctk runtime configure --runtime=docker
 sudo systemctl restart docker
+```
+
+## Multi Platform
+
+QEMU
+``` shell
+docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 ```
 
 ## Usage

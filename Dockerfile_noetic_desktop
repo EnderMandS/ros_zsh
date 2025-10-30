@@ -17,7 +17,7 @@ RUN apt update && \
     DEBIAN_FRONTEND=noninteractive apt install -y keyboard-configuration && \
     apt install -y x11-apps mesa-utils && \
     apt install -y ros-${ROS_DISTRO}-desktop-full && \
-    apt install -y python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential && \
+    apt install -y python3-pip python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential && \
     rm -rf /var/lib/apt/lists/*
 
 # setup user

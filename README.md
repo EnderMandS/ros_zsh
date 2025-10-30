@@ -23,13 +23,6 @@ sudo nvidia-ctk runtime configure --runtime=docker
 sudo systemctl restart docker
 ```
 
-## Multi Platform
-
-QEMU
-``` shell
-docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-```
-
 ## Usage
 
 ### Proxy
